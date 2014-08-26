@@ -10,7 +10,7 @@ import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
 
-public class UserInsert {
+public class UserInsertTest {
 
     // TODO : update the table name with your username
     static String tableName = "users";

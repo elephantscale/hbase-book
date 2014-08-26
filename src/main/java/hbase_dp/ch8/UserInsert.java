@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.elephantscale.hbase.book.chapter7;
+package hbase_dp.ch8;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
@@ -18,6 +18,7 @@ public class UserInsert {
 
     public static void main(String[] args) throws Exception {
         Configuration config = HBaseConfiguration.create();
+        config.set("hbase.zookeeper.quorum", "192.168.1.120");
         HTable htable = new HTable(config, tableName);
 //        htable.setAutoFlush(false); // PERF
 //        htable.setWriteBufferSize(1024*1024*12); // 12M; PERF

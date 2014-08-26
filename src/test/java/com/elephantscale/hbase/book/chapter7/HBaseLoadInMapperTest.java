@@ -14,7 +14,7 @@ import org.apache.hadoop.mapred.*;
 import org.apache.hadoop.mapred.lib.NullOutputFormat;
 import org.apache.hadoop.util.*;
 
-public class HBaseLoadInMapper extends Configured implements Tool {
+public class HBaseLoadInMapperTest extends Configured implements Tool {
 
     private static final int KEY_LENGTH = 12;
 
@@ -67,10 +67,10 @@ public class HBaseLoadInMapper extends Configured implements Tool {
             System.err.println("Usage: HBaseFileImporter <zookeeper-quorum> <input>");
             return -1;
         }
-        JobConf conf = new JobConf(getConf(), HBaseLoadInMapper.class);
+        JobConf conf = new JobConf(getConf(), HBaseLoadInMapperTest.class);
         conf.set("ZooKeeper-Quorum", args[0]);
         FileInputFormat.addInputPath(conf, new Path(args[1]));
-        conf.setMapperClass(HBaseLoadInMapper.FileLoadMapper.class);
+        conf.setMapperClass(HBaseLoadInMapperTest.FileLoadMapper.class);
         conf.setNumReduceTasks(1);
         conf.setOutputFormat(NullOutputFormat.class);        
         JobClient.runJob(conf);
@@ -80,7 +80,7 @@ public class HBaseLoadInMapper extends Configured implements Tool {
     public static void main(String[] args) throws Exception {
         System.out.println("Running HBaseLoad from " + args[1]);
         int exitCode = ToolRunner.run(HBaseConfiguration.create(),
-                new HBaseLoadInMapper(), args);
+                new HBaseLoadInMapperTest(), args);
     }
 
     private static String[] getFields(String string) {

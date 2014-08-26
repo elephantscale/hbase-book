@@ -10,7 +10,7 @@ import java.sql.Statement;
  *
  * @author mark
  */
-public class HelloPhoenix {
+public class HelloPhoenixTest {
     public static void main(String[] args) throws SQLException {
         Statement stmt = null;
         ResultSet rset = null;

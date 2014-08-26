@@ -20,7 +20,7 @@ import org.apache.hadoop.util.Tool;
  */
 import org.apache.hadoop.mapreduce.lib.output.NullOutputFormat;
 
-public class MRHBaseRead extends Configured implements Tool {
+public class MRHBaseReadTest extends Configured implements Tool {
 
     /**
      *
@@ -35,7 +35,7 @@ public class MRHBaseRead extends Configured implements Tool {
         Configuration config = HBaseConfiguration.create();
         Job job = new Job(config, "ExampleRead");
 
-        job.setJarByClass(MRHBaseRead.class);     // class that contains mapper
+        job.setJarByClass(MRHBaseReadTest.class);     // class that contains mapper
 
         Scan scan = new Scan();
 
