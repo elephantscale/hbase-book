@@ -6,6 +6,7 @@
 *.ear
 /target/
 logs/
+*.log
 output/
 
 # ignore eclipse stuff
