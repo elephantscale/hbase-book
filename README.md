@@ -1,4 +1,4 @@
 hbase-book
 ==========
 
-HBase Design Patterns for Packt (HDPP)
+HBase Design Patterns for Packt
