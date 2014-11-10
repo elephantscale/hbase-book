@@ -5,5 +5,5 @@ data = LOAD 'hbase-import/' using PigStorage(',') as (sensor_id:chararray, max:i
 -- dump data;
 
 -- # first field in the tuple is row_key
--- # we are mapping others into their own fields
+-- # we are mapping others into their respective fields
 store data into 'hbase://sensors' using org.apache.pig.backend.hadoop.hbase.HBaseStorage('f:max,f:min');

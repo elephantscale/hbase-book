@@ -4,13 +4,19 @@
  */
 package hbase_dp.ch8;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.client.HConnection;
+import org.apache.hadoop.hbase.client.HConnectionManager;
 import org.apache.hadoop.hbase.client.HTable;
+import org.apache.hadoop.hbase.client.HTableInterface;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
 
-public class UserInsert {
+public class UserInsert3 {
 
     // TODO : update the table name with your username
     static String tableName = "users";
@@ -20,14 +26,27 @@ public class UserInsert {
         Configuration config = HBaseConfiguration.create();
         // change the following to connect to remote clusters
         // config.set("hbase.zookeeper.quorum", "localhost");
+        
         long t1a = System.currentTimeMillis();
-        HTable htable = new HTable(config, tableName);
+        HConnection hConnection = HConnectionManager.createConnection(config);
         long t1b = System.currentTimeMillis();
-        System.out.println ("Connected to HTable in : " + (t1b-t1a) + " ms");
-//        htable.setAutoFlush(false); // PERF
-//        htable.setWriteBufferSize(1024*1024*12); // 12M; PERF
-        int total = 100;
+        System.out.println ("Connection manager in : " + (t1b-t1a) + " ms");
+
+        // simulate the first 'connection'
         long t2a = System.currentTimeMillis();
+        HTableInterface htable = hConnection.getTable(tableName) ;
+        long t2b = System.currentTimeMillis();
+        System.out.println ("first connection in : " + (t2b-t2a) + " ms");
+        
+        // second connection
+        long t3a = System.currentTimeMillis();
+        HTableInterface htable2 = hConnection.getTable(tableName) ;
+        long t3b = System.currentTimeMillis();
+        System.out.println ("second connection : " + (t3b-t3a) + " ms");
+
+        int total = 100;
+        long t4a = System.currentTimeMillis();
+        List<Put> puts = new ArrayList<>();
         for (int i = 0; i < total; i++) {
             int userid = i;
             String email = "user-" + i + "@foo.com";
@@ -38,12 +57,13 @@ public class UserInsert {
 
             put.add(Bytes.toBytes(familyName), Bytes.toBytes("email"), Bytes.toBytes(email));  
             put.add(Bytes.toBytes(familyName), Bytes.toBytes("phone"), Bytes.toBytes(phone));  
-            htable.put(put);
-
+            
+            puts.add(put); // just add to the list
         }
-        long t2b = System.currentTimeMillis();
-        System.out.println("inserted " + total + " users  in " + (t2b - t2a) + " ms");
-        htable.close();
-
+        htable.put(puts);  // do a batch put
+        long t4b = System.currentTimeMillis();
+        System.out.println("inserted " + total + " users  in " + (t4b - t4a) + " ms");
+ 
+        hConnection.close();
     }
 }

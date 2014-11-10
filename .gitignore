@@ -13,3 +13,7 @@ output/
 .classpath
 .project
 .settings/
+
+# intellij
+.idea
+*.iml
