@@ -59,7 +59,7 @@ public class UserScan
         htable.close();
 
         System.out
-                .println("customer: " + customerId + ",  record_count: " + recordCount + ", total_cost: " + totalCost);
+                .println("  record_count: " + recordCount + ", total_cost: " + totalCost);
         System.out.println("query time : " + (t2 - t1) / 1000000.0 + " ms\n");
     }
 }
